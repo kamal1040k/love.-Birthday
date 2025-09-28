@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Heart's Gift Box 💝</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Romantic Background Effects */
+  .floating-heart {
+    position: absolute;
+    font-size: 24px;
+    color: rgba(255, 105, 180, 0.7);
+    animation: floatUp 8s linear infinite;
+    text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+  }
+
+  @keyframes floatUp {
+    0% { 
+      transform: translateY(100vh) rotate(0deg) scale(0.8); 
+      opacity: 0; 
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { 
+      transform: translateY(-100px) rotate(360deg) scale(1.2); 
+      opacity: 0; 
+    }
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    animation: sparkle 3s linear infinite;
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Main Container */
+  .container {
+    text-align: center;
+    z-index: 10;
+  }
+
+  .instruction {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Realistic Gift Box */
+  .gift-container {
+    width: 220px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .gift-box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+
+  .gift-box:hover {
+    transform: rotateY(10deg) rotateX(5deg);
+  }
+
+  .box {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #ff6b6b, #ff8e8e);
+    border-radius: 15px;
+    position: absolute;
+    box-shadow: 
+      inset -5px -5px 15px rgba(0,0,0,0.2),
+      inset 5px 5px 15px rgba(255,255,255,0.1),
+      0 20px 40px rgba(0,0,0,0.4);
+    border: 2px solid #ff4757;
+  }
+
+  .lid {
+    position: absolute;
+    top: -40px;
+    left: 10px;
+    width: 200px;
+    height: 40px;
+    background: linear-gradient(145deg, #ff4757, #ff6b6b);
+    border-radius: 10px 10px 0 0;
+    transform-origin: bottom center;
+    transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 
+      0 -10px 20px rgba(0,0,0,0.3),
+      inset 0 -5px 10px rgba(255,255,255,0.2);
+    z-index: 2;
+  }
+
+  .ribbon {
+    position: absolute;
+    background: linear-gradient(45deg, #ffd700, #fff8dc);
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+  }
+
+  .ribbon-horizontal {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    transform: translateY(-50%);
+  }
+
+  .ribbon-vertical {
+    left: 50%;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .bow {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+    z-index: 3;
+  }
+
+  /* Opening Animation */
+  .gift-container.open .lid {
+    transform: translateY(-80px) rotateX(-45deg);
+  }
+
+  .gift-container.open .gift-box {
+    transform: scale(1.1);
+  }
+
+  /* Gift Contents */
+  .contents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.5s;
+  }
+
+  .gift-container.open .contents {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gift-item {
+    font-size: 40px;
+    margin: 10px 0;
+    animation: bounceIn 1s ease forwards;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .chocolate { animation-delay: 0.8s; }
+  .rose { animation-delay: 1.2s; }
+  .heart { animation-delay: 1.6s; }
+  .ring { animation-delay: 2s; }
+
+  /* Romantic Message */
+  .message-container {
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.5s ease 2.5s;
+  }
+
+  .gift-container.open ~ .message-container {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .romantic-message {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    line-height: 1.6;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    padding: 20px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .highlight {
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ffd700;
+  }
+
+  /* Continue Button */
+  .continue-btn {
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease 4s;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+  }
+
+  .gift-container.open ~ .continue-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .continue-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+  }
+</style>
+</head>
+<body>
+
+<!-- Background Elements -->
+<div id="backgroundEffects"></div>
+
+<div class="container">
+  <div class="instruction">🎁 Click on the gift box to open my heart 🎁</div>
+  
+  <div class="gift-container" id="giftContainer">
+    <div class="gift-box">
+      <div class="box"></div>
+      <div class="lid"></div>
+      <div class="ribbon ribbon-horizontal"></div>
+      <div class="ribbon ribbon-vertical"></div>
+      <div class="bow">🎀</div>
+      
+      <div class="contents">
+        <div class="gift-item chocolate">🍫</div>
+        <div class="gift-item rose">🌹</div>
+        <div class="gift-item heart">💖</div>
+        <div class="gift-item ring">💍</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-container">
+    <div class="romantic-message">
+      "Every gift in this box represents a piece of my heart.<br>
+      The <span class="highlight">chocolate</span> for sweetness you bring,<br>
+      The <span class="highlight">rose</span> for beauty you possess,<br>
+      The <span class="highlight">heart</span> for love I feel,<br>
+      And the <span class="highlight">ring</span> for forever I promise.<br><br>
+      You are my greatest gift 💝"
+    </div>
+  </div>
+
+  <button class="continue-btn" id="continueBtn" onclick="continueToNext()">
+    Continue to Our Story 🌟
+  </button>
+</div>
+
+<script>
+// Create background effects
+function createBackgroundEffects() {
+  const container = document.getElementById('backgroundEffects');
+  
+  // Floating hearts
+  for(let i = 0; i < 20; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerHTML = '💖';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+    container.appendChild(heart);
+  }
+  
+  // Sparkles
+  for(let i = 0; i < 15; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * 100 + 'vw';
+    sparkle.style.top = Math.random() * 100 + 'vh';
+    sparkle.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(sparkle);
+  }
+}
+
+// Open gift box
+const giftContainer = document.getElementById('giftContainer');
+const continueBtn = document.getElementById('continueBtn');
+
+let isOpened = false;
+
+giftContainer.addEventListener('click', () => {
+  if (!isOpened) {
+    giftContainer.classList.add('open');
+    isOpened = true;
+    
+    // Add celebration effect
+    celebrate();
+  }
+});
+
+function celebrate() {
+  // Add more floating hearts when opened
+  for(let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerHTML = '💝';
+      heart.style.left = '50%';
+      heart.style.fontSize = '30px';
+      heart.style.animationDuration = '3s';
+      document.getElementById('backgroundEffects').appendChild(heart);
+    }, i * 200);
+  }
+}
+
+function continueToNext() {
+  // Add smooth transition effect
+  document.body.style.opacity = '0';
+  document.body.style.transition = 'opacity 1s ease';
+  
+  setTimeout(() => {
+    window.location.href = "love.html";
+  }, 1000);
+}
+
+// Initialize
+createBackgroundEffects();
+
+// Add hover sound effect (optional)
+giftContainer.addEventListener('mouseenter', () => {
+  if (!isOpened) {
+    // You can add a subtle sound effect here
+  }
+});
+</script>
+
+</body>
+</html>

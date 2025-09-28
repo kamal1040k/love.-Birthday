@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Locker ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #ff9a9e, #fad0c4, #fbc2eb);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+    }
+
+    /* floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: rgba(255, 77, 109, 0.7);
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
+    }
+
+    .locker-box {
+      background: white;
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      text-align: center;
+      max-width: 330px;
+      width: 100%;
+      animation: heartbeat 1.8s infinite;
+      position: relative;
+      z-index: 5;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.05); }
+      50% { transform: scale(0.98); }
+      75% { transform: scale(1.02); }
+    }
+
+    .locker-box h2 {
+      color: #ff4d6d;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .pin-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .pin-inputs input {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 22px;
+      border: 2px solid #ff4d6d;
+      border-radius: 12px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .pin-inputs input:focus {
+      border-color: #ff1a4d;
+      box-shadow: 0 0 12px rgba(255, 77, 109, 0.7);
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff4d6d, #ff1a4d);
+      color: white;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(255, 77, 109, 0.4);
+    }
+
+    #message {
+      margin-top: 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- floating hearts background -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (12 + Math.random() * 24) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="locker-box" id="lockerWrap">
+    <h2>💖 Unlock the Secret 💖</h2>
+    <div class="pin-inputs">
+      <input type="password" maxlength="1" class="pin">
+      <input type="password" maxlength="1" class="pin">
+      <input type="password" maxlength="1" class="pin">
+      <input type="password" maxlength="1" class="pin">
+    </div>
+    <button onclick="unlock()">Unlock</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const pins = document.querySelectorAll(".pin");
+    const correctCode = "2025"; // 👉 यहाँ तपाईंको secret code change गर्नुहोस्
+
+    // auto-focus next input
+    pins.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        if (input.value && index < pins.length - 1) {
+          pins[index + 1].focus();
+        }
+      });
+    });
+
+    function unlock() {
+      const code = Array.from(pins).map(i => i.value).join("");
+      const msg = document.getElementById("message");
+      if (code === correctCode) {
+        msg.style.color = "green";
+        msg.innerText = "Unlocked! Love is waiting 💕";
+        setTimeout(() => {
+          window.location.href = "gift.html?playMusic=true";
+        }, 1500);
+      } else {
+        msg.style.color = "red";
+        msg.innerText = "Wrong Code ❌ Try Again!";
+        pins.forEach(p => p.value = "");
+        pins[0].focus();
+        // shake animation
+        document.getElementById("lockerWrap").animate(
+          [{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}],
+          {duration:400}
+        );
+      }
+    }
+  </script>
+
+</body>
+</html>
